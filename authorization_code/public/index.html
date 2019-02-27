@@ -150,6 +150,15 @@
                            headers: {'Authorization': 'Bearer ' + access_token},
                            success: function(response) {
                                console.log(response);
+                               trackuri = response.tracks.items[0].uri;
+                               var device_id = JSON.parse(sessionStorage.getItem('deviceid'));
+                               $.ajax({
+                                          url: `https://api.spotify.com/v1/me/player/play?device_id=${device_id}`,
+                                          type: 'PUT',
+                                          data: JSON.stringify({ uris: [trackuri] }),
+                                          headers: {'Authorization': 'Bearer ' + access_token}
+                                      })
+
                            }})
             })
 
